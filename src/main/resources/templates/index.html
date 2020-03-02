@@ -24,8 +24,11 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li th:if="${session.user eq null}"><a href="https://github.com/login/oauth/authorize?client_id=9649e173e7bd06cf074b&redirect_uri=http://localhost:8080/callback&scope=user&state=1">登录</a></li>
+                <li th:unless="not ${session.user}">
+                    <a href="/publish">发起</a>
+                </li>
                 <li class="dropdown" th:unless="not ${session.user}">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span th:text="${session.user.name}"></span> <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" th:text="${session.user.name}"></span> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">消息中心</a></li>
                         <li><a href="#">个人资料</a></li>
