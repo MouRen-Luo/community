@@ -30,7 +30,7 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li th:if="${pagination.showFirstPage}">
-                        <a th:href="@{'/profile/'+${section}(pagination.page=1)}" aria-label="Previous">
+                        <a th:href="@{'/profile/'+${section}(page=1)}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -56,7 +56,6 @@
         <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
             <div class="list-group section">
                 <a href="/profile/question" class="list-group-item" th:classappend="${section == 'question'}? 'active':''">
-                    <span class="badge">14</span>
                     我的问题
                 </a>
                 <a href="/profile/replies" class="list-group-item" th:classappend="${section == 'replies'}? 'active':''">
