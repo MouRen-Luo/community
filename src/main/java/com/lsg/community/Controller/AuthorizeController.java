@@ -5,6 +5,7 @@ import com.lsg.community.Dto.GithubUser;
 import com.lsg.community.Mapper.UserMapper;
 import com.lsg.community.Model.User;
 import com.lsg.community.Provider.GithubProvider;
+import com.lsg.community.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,8 @@ public class AuthorizeController {
     private GithubProvider githubProvider;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private UserService userService;
 
     @Value("${github.client.id}")
     private String clientId;
@@ -57,15 +60,29 @@ public class AuthorizeController {
             user.setToken(token);
             user.setName(githubUser.getName());
             user.setAccountId(String.valueOf(githubUser.getId()));
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
             user.setImageUrl(githubUser.getAvatar_url());
-            userMapper.insert(user);//保存进数据库
+            userService.createOrUpdate(user);//保存进数据库
             response.addCookie(new Cookie("token",token));
             return "redirect:/";
         }else {
             return "redirect:/";
             //登录失败
         }
+    }
+
+    /**
+     * 退出登录
+     * @param request
+     * @return
+     */
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request,
+                         HttpServletResponse response){
+        //清楚Cookie，Session
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token",null);
+        cookie.setMaxAge(0);//立即删除
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 }
