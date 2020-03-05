@@ -2,6 +2,9 @@ package com.lsg.community.Service;
 
 import com.lsg.community.Dto.PaginationDTO;
 import com.lsg.community.Dto.QuestionDTO;
+import com.lsg.community.Exception.CustomizeErrorCode;
+import com.lsg.community.Exception.CustomizeException;
+import com.lsg.community.Mapper.QuestionExtMapper;
 import com.lsg.community.Mapper.QuestionMapper;
 import com.lsg.community.Mapper.UserMapper;
 import com.lsg.community.Model.Question;
@@ -22,6 +25,8 @@ public class QuestionService {
     private QuestionMapper questionMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     public PaginationDTO list(Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
@@ -95,6 +100,9 @@ public class QuestionService {
 
     public QuestionDTO getById(Integer id) {
         Question question = questionMapper.selectByPrimaryKey(id);
+        if (question == null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
         User user = userMapper.selectByPrimaryKey(question.getCreator());
@@ -118,7 +126,17 @@ public class QuestionService {
             QuestionExample example = new QuestionExample();
             example.createCriteria()
                     .andIdEqualTo(question.getId());
-            questionMapper.updateByExampleSelective(updateQuestion,example);
+            int updated = questionMapper.updateByExampleSelective(updateQuestion,example);
+            if (updated !=1){
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
         }
+    }
+
+    public void incView(Integer id) {
+        Question record = new Question();
+        record.setId(id);
+        record.setViewCount(1);
+        questionExtMapper.incView(record);
     }
 }

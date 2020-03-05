@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/community.css"/>
-    <script type="/text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/jquery-3.4.1.min.js"></script>
     <script type="/text/javascript" src="/js/bootstrap.min.js"></script>
 </head>
 <body>
@@ -17,14 +17,16 @@
             <hr>
             <div class="media" th:each="qus : ${pagination.questionDTOS}">
                 <div class="media-left">
-                    <a href="#">
+                    <a th:href="@{'/question/'+${qus.id}}">
                         <img class="media-object img-circle" th:src="${qus.user.imageUrl}">
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${qus.title}"></h4>
+                    <h4 class="media-heading">
+                        <a th:href="@{'/question/'+${qus.id}}" th:text="${qus.title}"></a>
+                    </h4>
                     <span th:text="${qus.description}"></span><br>
-                    <span class="text-desc"><span th:text="${qus.commentCount}"></span>个回复 - <span th:text="${qus.viewCount}"></span>次浏览数 - <span th:text="${#dates.format(qus.gmtCreate,'yyyy-MM-dd')}"></span></span>
+                    <span class="text-desc"><span th:text="${qus.commentCount}"></span>个回复 - <span th:text="${qus.viewCount}"></span>次浏览 - <span th:text="${#dates.format(qus.gmtCreate,'yyyy-MM-dd')}"></span></span>
                 </div>
             </div>
             <nav aria-label="Page navigation">

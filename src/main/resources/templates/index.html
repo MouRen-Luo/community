@@ -26,7 +26,7 @@
                         <a th:href="@{'/question/'+${qus.id}}" th:text="${qus.title}"></a>
                     </h4>
                     <span th:text="${qus.description}"></span><br>
-                    <span class="text-desc"><span th:text="${qus.commentCount}"></span>个回复 - <span th:text="${qus.viewCount}"></span>次浏览数 - <span th:text="${#dates.format(qus.gmtCreate,'yyyy-MM-dd')}"></span></span>
+                    <span class="text-desc"><span th:text="${qus.commentCount}"></span>个回复 - <span th:text="${qus.viewCount}"></span>次浏览 - <span th:text="${#dates.format(qus.gmtCreate,'yyyy-MM-dd')}"></span></span>
                 </div>
             </div>
             <nav aria-label="Page navigation">
