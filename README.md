@@ -1,6 +1,5 @@
 #工具
 [SpringBoot MyBatis](http://mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/)
-[postman]()
 
 #脚本
 ````

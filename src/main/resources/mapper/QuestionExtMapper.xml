@@ -17,4 +17,9 @@
     view_count = view_count + #{viewCount,jdbcType=INTEGER}
     where id=#{id}
   </update>
+  <update id="incCommentCount" parameterType="com.lsg.community.Model.Question">
+    update question set
+    comment_count = comment_count + #{commentCount,jdbcType=INTEGER}
+    where id=#{id}
+  </update>
 </mapper>
