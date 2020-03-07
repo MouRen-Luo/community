@@ -12,7 +12,10 @@ body{
     margin-bottom: 15px;
 }
 
-.img-circle{
+.media-body{
+    padding-top: 21px;
+}
+.media-object{
     width: 55px;
     height: 55px;
 }
@@ -30,4 +33,13 @@ body{
 .community-menu{
     color: #999;
     font-size: 12px;
+}
+
+.comment{
+    margin: 10px 0;
+}
+
+.btn-comment{
+    float: right;
+    margin-bottom: 10px;
 }
