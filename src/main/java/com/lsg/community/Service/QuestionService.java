@@ -45,7 +45,9 @@ public class QuestionService {
         paginationDTO.setPagintion(totalPage,page);
         //获得当前页码
         Integer offset = size*(page-1);
-        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(new QuestionExample(),new RowBounds(offset,size));
+        QuestionExample example = new QuestionExample();
+        example.setOrderByClause("gmt_create desc");
+        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(example,new RowBounds(offset,size));
         List<QuestionDTO> questionDTOS = new ArrayList<>();
         for (Question question:
              questionList) {
@@ -83,7 +85,8 @@ public class QuestionService {
         QuestionExample example = new QuestionExample();
         example.createCriteria()
                 .andCreatorEqualTo(userId);
-        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(new QuestionExample(),new RowBounds(offset,size));
+        example.setOrderByClause("gmt_create desc");
+        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(example,new RowBounds(offset,size));
         List<QuestionDTO> questionDTOS = new ArrayList<>();
         for (Question question:
                 questionList) {

@@ -12,7 +12,7 @@ body{
     margin-bottom: 15px;
 }
 
-.media-body{
+.media-section{
     padding-top: 21px;
 }
 .media-object{
@@ -31,6 +31,10 @@ body{
 }
 
 .community-menu{
+    margin-bottom: 20px;
+}
+
+.community-menu a{
     color: #999;
     font-size: 12px;
 }
@@ -42,4 +46,51 @@ body{
 .btn-comment{
     float: right;
     margin-bottom: 10px;
+}
+
+.menu{
+    color: #999;
+    margin-top: 10px;
+}
+
+.menu .icon{
+    margin-right: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.menu .active{
+    color: #499ef3;
+}
+
+.menu .icon:hover{
+    color: #499ef3;
+}
+
+.function{
+    padding-top: 2px;
+}
+
+.media-sp{
+    margin-top: 0;
+}
+
+.hr-bottom{
+    margin-bottom: 0;
+}
+
+.question-title{
+    margin-top: 30px;
+}
+
+.sub-comments{
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid #eee;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+
+.sub-comments .btn{
+    margin: 10px 0;
 }
