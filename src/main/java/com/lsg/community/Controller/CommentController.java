@@ -39,14 +39,14 @@ public class CommentController {
         comment.setGmtModified(System.currentTimeMillis());
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setCommentator(user.getId());
-        comment.setLikeCount(0L);
+        comment.setLikeCount(0);
         commentService.insert(comment);
         return ResultDTO.okOf();
     }
 
     @ResponseBody
-    @RequestMapping(value = "/comment/{id}",method = RequestMethod.POST)
-    public ResultDTO<List> comments(@PathVariable(name = "id")Long id){
+    @RequestMapping(value = "/comment/{id}",method = RequestMethod.GET)
+    public ResultDTO<List<CommentDTO>> comments(@PathVariable(name = "id")Long id){
         final List<CommentDTO> commentDTOS = commentService.listByTargetId(id, CommentTypeEnum.COMMENT);
         return ResultDTO.okOf(commentDTOS);
     }

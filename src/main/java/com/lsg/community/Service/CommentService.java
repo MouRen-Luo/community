@@ -3,10 +3,7 @@ package com.lsg.community.Service;
 import com.lsg.community.Dto.CommentDTO;
 import com.lsg.community.Exception.CustomizeErrorCode;
 import com.lsg.community.Exception.CustomizeException;
-import com.lsg.community.Mapper.CommentMapper;
-import com.lsg.community.Mapper.QuestionExtMapper;
-import com.lsg.community.Mapper.QuestionMapper;
-import com.lsg.community.Mapper.UserMapper;
+import com.lsg.community.Mapper.*;
 import com.lsg.community.Model.*;
 import com.lsg.community.enums.CommentTypeEnum;
 import org.springframework.beans.BeanUtils;
@@ -31,6 +28,8 @@ public class CommentService {
     private QuestionExtMapper questionExtMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private CommentExtMapper commentExtMapper;
 
     @Transactional
     public void insert(Comment comment) {
@@ -49,6 +48,10 @@ public class CommentService {
                 throw  new CustomizeException(CustomizeErrorCode.COMMENT_NOY_FOUND);
             }
             commentMapper.insert(comment);
+
+
+            dbcomment.setCommentCount(1);
+            commentExtMapper.incCommentCount(dbcomment);
         }else {
             //回复问题
             Question question = questionMapper.selectByPrimaryKey(comment.getParentId());
