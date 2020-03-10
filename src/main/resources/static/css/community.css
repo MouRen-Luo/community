@@ -83,6 +83,22 @@ body{
     margin-top: 30px;
 }
 
+.question-tag{
+    margin:10px 10px;
+    white-space: normal;
+}
+
+.publish-tag-tab{
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.publish-tag-tab .label-info{
+    margin:10px 10px;
+    white-space: normal;
+}
+
 .sub-comments{
     border-radius: 5px;
     margin-top: 10px;
@@ -94,3 +110,13 @@ body{
 .sub-comments .btn{
     margin: 10px 0;
 }
+
+.question-related{
+    font-size: 14px;
+    line-height: 20px;
+    padding-left: 0;
+    list-style: none;
+}
+
+
+

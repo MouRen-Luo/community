@@ -2,11 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>发布-LSG</title>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/community.css"/>
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script src="/js/community-js.js"></script>
 </head>
 <body>
 <div th:insert="navgation :: nav"></div>
@@ -19,22 +20,47 @@
                 <input type="hidden" name="id" th:value="${id}">
                 <div class="form-group">
                     <label for="title">问题标题(简单扼要)：</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="问题标题……" th:value="${title}">
+                    <input type="text" class="form-control" id="title" name="title" placeholder="问题标题……"
+                           th:value="${title}"
+                           autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label for="description">问题补充(必填，请参照右侧提醒)：</label>
-                    <textarea type="text" class="form-control" id="description" name="description" cols="30" rows="10" th:text="${description}"></textarea>
+                    <textarea type="text" class="form-control" id="description" name="description" cols="30" rows="10"
+                              th:text="${description}"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="tag">添加标签：</label>
-                    <input type="text" class="form-control" id="tag" name="tag" placeholder="输入标签，以逗号分隔" th:value="${tag}">
+                    <input type="text" class="form-control" id="tag" name="tag" placeholder="输入标签，以逗号分隔"
+                           th:value="${tag}" autocomplete="off" onclick="showTabs()">
+                    <!--浮动框-->
+                    <div id="select-tab" class="publish-tag-tab">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation"  th:each="selectCategory,index : ${tags}" th:class="${index.first ? 'active':''}">
+                                    <a th:href="${'#'+selectCategory.categoryName}" aria-controls="home" role="tab" data-toggle="tab" th:text="${selectCategory.categoryName}"></a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane" th:id="${selectCategory.categoryName}"
+                                     th:each="selectCategory,index : ${tags}" th:classappend="${index.first ? 'active':''}">
+                                    <span class="label label-info" th:each="selectTags : ${selectCategory.tags}">
+                                        <span class="glyphicon glyphicon-tags"  onclick="selectTag(this)" th:data-tag="${selectTags}"
+                                        th:text="${'   '+selectTags}"></span>
+                                    </span>
+                                </div>
+                            </div>
+                    </div>
+                    <!--浮动框END-->
                 </div>
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-9 col-md-9 col-xs-12 col-sm-12">
                             <div th:text="${error}" th:if="${error != null}"></div>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12"><button type="submit" class="btn btn-success btn-publish">发起</button></div>
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <button type="submit" class="btn btn-success btn-publish">发起</button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -44,7 +70,7 @@
             <ul>
                 <li>问题标题：请用精简的语言描述您发起的问题，不超过25字</li>
                 <li>问题补充：详细补充您的问题内容，并确保问题描述清晰直观，并提供一些相关资料</li>
-                <li>添加标签：选择一个或多个合适的标签，用逗号隔开，每个标签不超过10个字</li>
+                <li>添加标签：选择一个或多个合适的标签，用中文逗号隔开，每个标签不超过10个字</li>
             </ul>
         </div>
     </div>

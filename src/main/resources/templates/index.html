@@ -24,7 +24,7 @@
         <div class="col-lg-9 col-md-9 col-xs-12 col-sm-12">
             <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;发现</h2>
             <hr>
-            <div class="media" th:each="qus : ${pagination.questionDTOS}">
+            <div class="media" th:each="qus : ${pagination.data}">
                 <div class="media-left">
                     <a th:href="@{'/question/'+${qus.id}}" >
                         <img class="media-object img-rounded" th:src="${qus.user.imageUrl}">
