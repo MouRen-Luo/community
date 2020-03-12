@@ -3,6 +3,7 @@ package com.lsg.community.Interception;
 import com.lsg.community.Mapper.UserMapper;
 import com.lsg.community.Model.User;
 import com.lsg.community.Model.UserExample;
+import com.lsg.community.Service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -17,6 +18,8 @@ import java.util.List;
 public class SessionInterceptor implements HandlerInterceptor {
      @Autowired
     private UserMapper userMapper;
+     @Autowired
+     private NotificationService notificationService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -31,6 +34,8 @@ public class SessionInterceptor implements HandlerInterceptor {
                     List<User> user = userMapper.selectByExample(userExample);
                     if (user.size() != 0) {
                         request.getSession().setAttribute("user", user.get(0));
+                        Long unreadCount = notificationService.unreadCount(user.get(0).getId());
+                        request.getSession().setAttribute("unreadCount",unreadCount);
                     }
                     break;
                 }
