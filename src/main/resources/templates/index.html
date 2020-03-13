@@ -41,23 +41,24 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li th:if="${pagination.showFirstPage}">
-                        <a th:href="@{/(pagination.page=1)}" aria-label="Previous">
+                        <a th:href="@{${content}==null ? '/?page=1': '/?page=1&content='+${content}}"  aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <li th:if="${pagination.showPrevious}">
-                        <a th:href="@{/(page=${pagination.page - 1})}" aria-label="Previous">
+                        <a th:href="@{${content}==null ? '/?page='+${pagination.page-1}: '/?page='+${pagination.page-1}+'&content='+${content}}" aria-label="Previous">
                             <span aria-hidden="true">&lsaquo;</span>
                         </a>
                     </li>
-                    <li th:class="${pagination.page == page}? 'active':''" th:each="page : ${pagination.pages}"><a th:href="@{/(page=${page})}" th:text="${page}"></a></li>
+                    <li th:class="${pagination.page == page}? 'active':''" th:each="page : ${pagination.pages}">
+                        <a th:href="@{${content}==null ? '/?page='+${page}: '/?page='+${page}+'&content='+${content}}" th:text="${page}"></a></li>
                     <li th:if="${pagination.showNext}">
-                        <a th:href="@{/(page=${pagination.page + 1})}" aria-label="Next">
+                        <a th:href="@{${content}==null ? '/?page='+${pagination.page + 1}: '/?page='+${pagination.page + 1}+'&content='+${content}}" aria-label="Next">
                             <span aria-hidden="true">&rsaquo;</span>
                         </a>
                     </li>
                     <li th:if="${pagination.showEndPage}">
-                        <a th:href="@{/(page=${pagination.totalPage})}" aria-label="Next">
+                        <a th:href="@{${content}==null ? '/?page='+${pagination.totalPage}: '/?page='+${pagination.totalPage}+'&content='+${content}}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

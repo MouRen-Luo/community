@@ -25,4 +25,22 @@
   <select id="selectRelated" parameterType="com.lsg.community.Model.Question" resultMap="BaseResultMap">
     select * from question where id!=#{id} and tag regexp #{tag}
   </select>
+  <select id="countByContent" parameterType="com.lsg.community.Dto.QuestionQueryDTO" resultType="Integer">
+    select count(1) from question
+     <where>
+       <if test="content !=null">
+         title regexp #{content}
+       </if>
+     </where>
+
+  </select>
+  <select id="selectByContent" parameterType="com.lsg.community.Dto.QuestionQueryDTO" resultMap="BaseResultMap">
+    select * from question
+     <where>
+       <if test="content !=null">
+         title regexp #{content}
+       </if>
+     </where>
+    limit #{page},#{size}
+  </select>
 </mapper>

@@ -2,6 +2,7 @@ package com.lsg.community.Service;
 
 import com.lsg.community.Dto.PaginationDTO;
 import com.lsg.community.Dto.QuestionDTO;
+import com.lsg.community.Dto.QuestionQueryDTO;
 import com.lsg.community.Exception.CustomizeErrorCode;
 import com.lsg.community.Exception.CustomizeException;
 import com.lsg.community.Mapper.QuestionExtMapper;
@@ -31,10 +32,17 @@ public class QuestionService {
     @Autowired
     private QuestionExtMapper questionExtMapper;
 
-    public PaginationDTO list(Integer page, Integer size) {
+    public PaginationDTO list(String content, Integer page, Integer size) {
+        if (StringUtils.isNotBlank(content)){
+            String[] tags = StringUtils.split(content, ' ');
+            content = Arrays.stream(tags).collect(Collectors.joining("|"));
+        }
+
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalPage;
-        Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
+        QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
+        questionQueryDTO.setContent(content);
+        Integer totalCount = questionExtMapper.countByContent(questionQueryDTO);
         totalPage= totalCount % size == 0 ? (totalCount/size):(totalCount/size+1);
         if (totalPage<=0){
             totalPage=1;
@@ -48,9 +56,9 @@ public class QuestionService {
         paginationDTO.setPagintion(totalPage,page);
         //获得当前页码
         Integer offset = size*(page-1);
-        QuestionExample example = new QuestionExample();
-        example.setOrderByClause("gmt_create desc");
-        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(example,new RowBounds(offset,size));
+        questionQueryDTO.setPage(offset);
+        questionQueryDTO.setSize(size);
+        List<Question> questionList = questionExtMapper.selectByContent(questionQueryDTO);
         List<QuestionDTO> questionDTOS = new ArrayList<>();
         for (Question question:
              questionList) {
