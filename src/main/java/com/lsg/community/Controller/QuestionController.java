@@ -5,6 +5,7 @@ import com.lsg.community.Dto.QuestionDTO;
 import com.lsg.community.Service.CommentService;
 import com.lsg.community.Service.QuestionService;
 import com.lsg.community.enums.CommentTypeEnum;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,8 @@ public class QuestionController {
         QuestionDTO questionDTO = questionService.getById(id);
         List<QuestionDTO> relatedQuestions = questionService.selectRelated(questionDTO);
         List<CommentDTO> comments = commentService.listByTargetId(id, CommentTypeEnum.QUESTION);
+        String substring = questionDTO.getDescription().substring(30);
+        questionDTO.setDescription(substring);
         //累加浏览数
         questionService.incView(id);
         model.addAttribute("question",questionDTO);
